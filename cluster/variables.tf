@@ -32,3 +32,8 @@ variable "app" {
   type    = string
   default = "archie-backend"
 }
+
+variable "domain" {
+  type = string
+  default = "lukafurlan.net"
+}

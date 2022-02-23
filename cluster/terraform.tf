@@ -15,16 +15,28 @@ provider "digitalocean" {
   token = var.do-token
 }
 
+resource "digitalocean_vpc" "archie" {
+  name   = var.environment-name
+  region = var.do-region
+}
+
 resource "digitalocean_kubernetes_cluster" "archie" {
-  name    = var.environment-name
-  region  = var.do-region
-  version = var.do-kubernetes-cluster-version
+  name     = var.environment-name
+  region   = var.do-region
+  version  = var.do-kubernetes-cluster-version
+  vpc_uuid = digitalocean_vpc.archie.id
 
   node_pool {
     name       = "worker-pool"
     size       = var.do-worker-size
-    node_count = 1
+    auto_scale = true
+    min_nodes  = 1
+    max_nodes  = 5
   }
+}
+
+resource "digitalocean_domain" "lukafurlan-domain" {
+  name = var.domain
 }
 
 provider "kubernetes" {
@@ -35,7 +47,7 @@ provider "kubernetes" {
   )
 }
 
-resource "kubernetes_deployment" "app" {
+resource "kubernetes_deployment" "archie" {
   metadata {
     name = var.app
     labels = {
@@ -43,7 +55,7 @@ resource "kubernetes_deployment" "app" {
     }
   }
   spec {
-    replicas = 3
+    replicas = 1
 
     selector {
       match_labels = {
@@ -75,17 +87,55 @@ resource "kubernetes_service" "api" {
     labels = {
       app = var.app
     }
+    annotations = {
+      "service.beta.kubernetes.io/do-loadbalancer-protocol"                 = "https"
+      "service.beta.kubernetes.io/do-loadbalancer-certificate-id"           = digitalocean_certificate.domain-certificate.uuid
+      "service.beta.kubernetes.io/do-loadbalancer-tls-ports"                = "443"
+      "service.beta.kubernetes.io/do-loadbalancer-redirect-http-to-https"   = "true"
+      "service.beta.kubernetes.io/do-loadbalancer-enable-backend-keepalive" = "true"
+    }
   }
   spec {
     type = "LoadBalancer"
 
     selector = {
-      app = kubernetes_deployment.app.metadata.0.labels.app
+      app = kubernetes_deployment.archie.metadata.0.labels.app
     }
 
     port {
+      name        = "https"
+      protocol    = "TCP"
+      port        = 443
+      target_port = 80
+    }
+
+    port {
+      name        = "http"
+      protocol    = "TCP"
       port        = 80
       target_port = 80
     }
   }
+}
+
+resource "digitalocean_record" "lukafurlan-domain" {
+  domain = digitalocean_domain.lukafurlan-domain.name
+  name   = "@"
+  type   = "A"
+  ttl    = 30
+  value  = kubernetes_service.api.status[0].load_balancer[0].ingress[0].ip
+}
+
+resource "digitalocean_certificate" "domain-certificate" {
+  name    = "api-cert"
+  type    = "lets_encrypt"
+  domains = [var.domain]
+}
+
+output "LoadBalancer_IP" {
+  value = kubernetes_service.api.status[0].load_balancer[0].ingress[0].ip
+}
+
+output "Certificate_ID" {
+  value = digitalocean_certificate.domain-certificate.uuid
 }
