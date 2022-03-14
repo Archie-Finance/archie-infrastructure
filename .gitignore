@@ -3,3 +3,4 @@
 terraform.tfstate*
 kubeconfig*
 helm/infrastructure/templates/unsealed_secrets
+aws-cluster/outputs
