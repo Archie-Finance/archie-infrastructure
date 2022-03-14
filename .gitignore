@@ -2,3 +2,4 @@
 .terraform*
 terraform.tfstate*
 kubeconfig*
+helm/infrastructure/unsealed_secrets

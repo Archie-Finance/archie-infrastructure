@@ -1,7 +1,7 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "archie-backend.name" -}}
+{{- define "infrastructure.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
@@ -10,7 +10,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "archie-backend.fullname" -}}
+{{- define "infrastructure.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -26,16 +26,16 @@ If release name contains chart name it will be used as a full name.
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "archie-backend.chart" -}}
+{{- define "infrastructure.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
 Common labels
 */}}
-{{- define "archie-backend.labels" -}}
-helm.sh/chart: {{ include "archie-backend.chart" . }}
-{{ include "archie-backend.selectorLabels" . }}
+{{- define "infrastructure.labels" -}}
+helm.sh/chart: {{ include "infrastructure.chart" . }}
+{{ include "infrastructure.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
@@ -45,17 +45,17 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{/*
 Selector labels
 */}}
-{{- define "archie-backend.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "archie-backend.name" . }}
+{{- define "infrastructure.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "infrastructure.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
 Create the name of the service account to use
 */}}
-{{- define "archie-backend.serviceAccountName" -}}
+{{- define "infrastructure.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
-{{- default (include "archie-backend.fullname" .) .Values.serviceAccount.name }}
+{{- default (include "infrastructure.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
