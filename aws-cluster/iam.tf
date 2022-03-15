@@ -82,21 +82,23 @@ module "iam_policy_s3_access" {
         "s3:GetBucketLocation",
         "s3:ListAllMyBuckets"
       ],
-      "Resource": ["arn:aws:s3:::*"]
+      "Resource": ["*"]
     },
     {
       "Effect": "Allow",
       "Action": ["s3:ListBucket"],
-      "Resource": ["arn:aws:s3:::*"]
+      "Resource": ["*"]
     },
     {
       "Effect": "Allow",
       "Action": [
         "s3:PutObject",
+        "s3:PutObjectAcl",
         "s3:GetObject",
+        "s3:GetObjectAcl",
         "s3:DeleteObject"
       ],
-      "Resource": ["arn:aws:s3:::*"]
+      "Resource": ["*"]
     }
   ]
 }
@@ -113,6 +115,11 @@ module "iam_user_github_actions" {
 resource "aws_iam_user_policy_attachment" "attach_container_registry_access_policy" {
   user       = module.iam_user_github_actions.iam_user_name
   policy_arn = module.iam_policy_container_registry_access.arn
+}
+
+resource "aws_iam_user_policy_attachment" "attach_s3_access_policy" {
+  user       = module.iam_user_github_actions.iam_user_name
+  policy_arn = module.iam_policy_s3_access.arn
 }
 
 resource "aws_iam_user_policy_attachment" "attach_eks_access_policy" {
