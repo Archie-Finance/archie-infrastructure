@@ -48,6 +48,22 @@ module "records" {
       records = [
         kubernetes_service.example.status.0.load_balancer.0.ingress.0.hostname
       ]
+    },
+    {
+      name = ""
+      type = "A"
+      alias = {
+        name    = module.cdn.cloudfront_distribution_domain_name
+        zone_id = module.cdn.cloudfront_distribution_hosted_zone_id
+      }
+    },
+    {
+      name = ""
+      type = "AAAA"
+      alias = {
+        name    = module.cdn.cloudfront_distribution_domain_name
+        zone_id = module.cdn.cloudfront_distribution_hosted_zone_id
+      }
     }
   ]
 

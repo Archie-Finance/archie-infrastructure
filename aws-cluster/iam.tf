@@ -4,7 +4,7 @@ module "iam_policy_container_registry_access" {
 
   name        = "GithubActionsContainerRegistryAccess"
   path        = "/"
-  description = "Accress to ECR for Github actions"
+  description = "Access to ECR for Github actions"
 
   policy = <<EOF
 {
@@ -47,7 +47,7 @@ module "iam_policy_eks_access" {
 
   name        = "GithubActionsEksAccess"
   path        = "/"
-  description = "Accress to EKS for Github actions"
+  description = "Access to EKS for Github actions"
 
   policy = <<EOF
 {
@@ -59,6 +59,45 @@ module "iam_policy_eks_access" {
           "Action": "eks:*",
           "Resource": "${module.eks.cluster_arn}"
       }
+  ]
+}
+EOF
+}
+
+module "iam_policy_s3_access" {
+  source  = "terraform-aws-modules/iam/aws//modules/iam-policy"
+  version = "4.14.0"
+
+  name        = "GithubActionsS3Access"
+  path        = "/"
+  description = "Access to S3 for Github actions"
+
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:GetBucketLocation",
+        "s3:ListAllMyBuckets"
+      ],
+      "Resource": ["arn:aws:s3:::*"]
+    },
+    {
+      "Effect": "Allow",
+      "Action": ["s3:ListBucket"],
+      "Resource": ["arn:aws:s3:::*"]
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:PutObject",
+        "s3:GetObject",
+        "s3:DeleteObject"
+      ],
+      "Resource": ["arn:aws:s3:::*"]
+    }
   ]
 }
 EOF

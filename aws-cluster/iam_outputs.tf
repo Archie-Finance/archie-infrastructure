@@ -25,6 +25,17 @@ output "iam_user_github_actions_access_key_id" {
 
 output "iam_user_github_actions_access_key_secret" {
   description = "IAM Access Key Secret for Github actions IAM user"
-  sensitive   = true
-  value       = module.iam_user_github_actions.iam_access_key_secret
+  value       = nonsensitive(module.iam_user_github_actions.iam_access_key_secret)
 }
+
+resource "local_file" "iam_user_credentials" {
+  filename = "${path.module}/outputs/iam_user_credentials.json"
+  content  = <<EOF
+{
+  "iam_user_name": "${module.iam_user_github_actions.iam_user_name}",
+  "iam_access_key_id": "${module.iam_user_github_actions.iam_access_key_id}",
+  "iam_access_key_secret": "${module.iam_user_github_actions.iam_access_key_secret}",
+}
+EOF
+}
+
