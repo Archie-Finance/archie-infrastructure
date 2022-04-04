@@ -105,6 +105,29 @@ module "iam_policy_s3_access" {
 EOF
 }
 
+module "iam_policy_cloudfront_access" {
+  source  = "terraform-aws-modules/iam/aws//modules/iam-policy"
+  version = "4.14.0"
+
+  name        = "GithubActionsCloudFrontAccess"
+  path        = "/"
+  description = "Access to cloudfront for Github actions"
+
+  policy = <<EOF
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": "cloudfront:CreateInvalidation",
+            "Resource": "*"
+        }
+    ]
+}
+  EOF
+}
+
 module "iam_user_github_actions" {
   source  = "terraform-aws-modules/iam/aws//modules/iam-user"
   version = "4.14.0"
@@ -125,4 +148,9 @@ resource "aws_iam_user_policy_attachment" "attach_s3_access_policy" {
 resource "aws_iam_user_policy_attachment" "attach_eks_access_policy" {
   user       = module.iam_user_github_actions.iam_user_name
   policy_arn = module.iam_policy_eks_access.arn
+}
+
+resource "aws_iam_user_policy_attachment" "attach_cloudfront_access_policy" {
+  user       = module.iam_user_github_actions.iam_user_name
+  policy_arn = module.iam_policy_cloudfront_access.arn
 }
