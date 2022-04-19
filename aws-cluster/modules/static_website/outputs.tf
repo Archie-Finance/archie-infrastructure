@@ -7,7 +7,7 @@ output "cloudfront_distribution_hosted_zone_id" {
 }
 
 resource "local_file" "cloudfront_distribution_details" {
-  filename = "${path.module}/outputs/cloudfront_distribution_${var.name}.json"
+  filename = "${path.root}/outputs/cloudfront_distribution_${var.name}.json"
   content  = <<EOF
 {
   "cloudfront_id": "${module.cdn.cloudfront_distribution_id}",

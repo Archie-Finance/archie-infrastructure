@@ -29,30 +29,3 @@ provider "kubernetes" {
   cluster_ca_certificate = base64decode(data.aws_eks_cluster.cluster.certificate_authority.0.data)
   token                  = data.aws_eks_cluster_auth.cluster.token
 }
-
-resource "kubernetes_service" "example" {
-  metadata {
-    name = "terraform-example"
-
-    annotations = {
-      "service.beta.kubernetes.io/aws-load-balancer-ssl-cert"         = var.acm_certificate_arn
-      "service.beta.kubernetes.io/aws-load-balancer-ssl-ports"        = "https"
-      "service.beta.kubernetes.io/aws-load-balancer-backend-protocol" = "http"
-    }
-  }
-
-  spec {
-    selector = {
-      test = "archie-backend"
-    }
-
-    port {
-      name        = "https"
-      protocol    = "TCP"
-      port        = 443
-      target_port = 80
-    }
-
-    type = "LoadBalancer"
-  }
-}

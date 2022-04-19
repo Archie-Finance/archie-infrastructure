@@ -11,10 +11,10 @@ variable "cluster_name" {
   default = "archie-development-cluster"
 }
 
-variable "domain_zone_id" {
-  default = "Z02811371LL6FBZYKU5LO"
-}
-
 variable "domain" {
   default = "dev.archie.finance"
+}
+
+variable "zone_id" {
+  default = "Z0562443340N7JM4VNIHN"
 }

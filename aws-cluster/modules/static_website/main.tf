@@ -70,8 +70,8 @@ data "aws_iam_policy_document" "static_website_bucket_bucket_policy" {
 }
 
 module "static_website_bucket" {
-  # TODO: Update this when proper release is done
-  source = "git::https://github.com/terraform-aws-modules/terraform-aws-s3-bucket.git?ref=fix-tf-provider-v4"
+  source  = "terraform-aws-modules/s3-bucket/aws"
+  version = "3.0.1"
 
   bucket = var.domain_name
   acl    = "public-read"

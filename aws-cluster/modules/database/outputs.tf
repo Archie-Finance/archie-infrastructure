@@ -1,5 +1,5 @@
 resource "local_file" "database_credentials" {
-  filename = "${path.root}/outputs/${var.name}/database/database_credentials.json"
+  filename = "${path.root}/outputs/database_credentials.json"
   content  = <<EOF
 {
   "database": "${module.db.db_instance_name}",

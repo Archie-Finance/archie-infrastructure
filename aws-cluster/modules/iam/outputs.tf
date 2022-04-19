@@ -1,5 +1,5 @@
 resource "local_file" "iam_user_credentials" {
-  filename = "${path.root}/outputs/${var.name}/iam_user_credentials.json"
+  filename = "${path.root}/outputs/iam_user_credentials.json"
   content  = <<EOF
 {
   "iam_user_name": "${module.iam_user_github_actions.iam_user_name}",
