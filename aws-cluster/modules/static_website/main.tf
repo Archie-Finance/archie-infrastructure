@@ -5,7 +5,7 @@ module "cdn" {
   comment = var.description
   enabled = true
 
-  aliases = [var.domain_name]
+  aliases = concat([var.domain_name], var.alternate_domains)
 
   is_ipv6_enabled     = true
   price_class         = "PriceClass_All"
@@ -40,10 +40,12 @@ module "cdn" {
     target_origin_id       = var.name
     viewer_protocol_policy = "redirect-to-https"
 
-    allowed_methods = ["GET", "HEAD", "OPTIONS"]
+    allowed_methods = ["GET", "HEAD", "OPTIONS", "PUT", "DELETE", "POST", "PATCH"]
     cached_methods  = ["GET", "HEAD"]
     compress        = true
     query_string    = true
+
+    lambda_function_association = var.lambda_function_association
   }
 
   viewer_certificate = {

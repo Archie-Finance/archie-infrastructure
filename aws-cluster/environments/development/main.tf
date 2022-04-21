@@ -90,7 +90,15 @@ module "marketing_website" {
   name                = "marketing_website"
   description         = "Marketing website"
   domain_name         = var.domain
+  alternate_domains   = ["www.${var.domain}"]
   acm_certificate_arn = module.certificate_manager.acm_certificate_arn
+
+  lambda_function_association = {
+    origin-request = {
+      lambda_arn   = "arn:aws:lambda:us-east-1:108827241267:function:gatsby-routing:4"
+      include_body = false
+    }
+  }
 
   depends_on = [module.certificate_manager]
 }
@@ -125,7 +133,7 @@ module "route53" {
   records = [
     {
       name = "api"
-      type = "A"
+      type = "CNAME"
       ttl  = 60
       records = [
         "a7840d34c44ce40a6a2f405fa0a4718f-494685174.us-east-1.elb.amazonaws.com"
@@ -141,6 +149,14 @@ module "route53" {
     },
     {
       name = ""
+      type = "A"
+      alias = {
+        name    = module.marketing_website.cloudfront_distribution_domain_name
+        zone_id = module.marketing_website.cloudfront_distribution_hosted_zone_id
+      }
+    },
+    {
+      name = "www"
       type = "A"
       alias = {
         name    = module.marketing_website.cloudfront_distribution_domain_name
