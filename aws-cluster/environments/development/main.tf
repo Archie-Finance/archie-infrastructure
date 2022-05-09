@@ -10,12 +10,12 @@ terraform {
     }
   }
 
-  backend "s3" {
-    bucket         = "archie-finance-terraform-state"
-    key            = "environments/development/terraform.tfstate"
-    region         = "us-east-1"
-    dynamodb_table = "archie-finance-terraform-lock"
-    encrypt        = true
+  cloud {
+    organization = "archie"
+
+    workspaces {
+      name = "archie-development"
+    }
   }
 }
 
@@ -39,6 +39,20 @@ module "vpc" {
 
   name         = var.name
   cluster_name = var.cluster_name
+}
+
+module "hcp_vault" {
+  source = "../../modules/hcp_vault"
+
+  cluster_id = var.cluster_name
+  peering_id = var.name
+  route_id   = var.name
+
+  enable_public_endpoint = true
+
+  peer_vpc_id     = module.vpc.vpc_id
+  peer_account_id = module.vpc.vpc_owner
+  vpc_cidr_block  = module.vpc.vpc_cidr_block
 }
 
 module "container_registry" {

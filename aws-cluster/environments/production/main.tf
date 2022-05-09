@@ -10,12 +10,20 @@ terraform {
     }
   }
 
-  backend "s3" {
-    bucket         = "archie-finance-terraform-state"
-    key            = "environments/production/terraform.tfstate"
-    region         = "us-east-1"
-    dynamodb_table = "archie-finance-terraform-lock"
-    encrypt        = true
+  # backend "s3" {
+  #   bucket         = "archie-finance-terraform-state"
+  #   key            = "environments/production/terraform.tfstate"
+  #   region         = "us-east-1"
+  #   dynamodb_table = "archie-finance-terraform-lock"
+  #   encrypt        = true
+  # }
+
+  cloud {
+    organization = "archie"
+
+    workspaces {
+      name = "archie-production"
+    }
   }
 }
 

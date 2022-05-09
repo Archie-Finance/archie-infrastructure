@@ -27,3 +27,11 @@ output "config_map_aws_auth" {
   description = "A kubernetes configuration to authenticate to this EKS cluster."
   value       = module.eks.config_map_aws_auth
 }
+
+output "cluster_certificate_authority_data" {
+  value = module.eks.cluster_certificate_authority_data
+}
+
+output "cluster_certificate_authority_data_decoded" {
+  value = base64decode(module.eks.cluster_certificate_authority_data)
+}

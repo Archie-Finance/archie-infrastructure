@@ -1,0 +1,4 @@
+vault:
+  injector:
+    enabled: true
+    externalVaultAddr: https://archie-development-cluster.private.vault.dd3a41e4-6264-458d-9db4-ae2b4d3b6cce.aws.hashicorp.cloud:8200
