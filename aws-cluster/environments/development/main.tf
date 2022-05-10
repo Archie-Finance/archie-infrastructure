@@ -78,6 +78,12 @@ module "eks" {
       additional_userdata  = "development worker"
       asg_desired_capacity = 1
     },
+    {
+      name                 = "worker-group-2"
+      instance_type        = "t2.medium"
+      additional_userdata  = "development worker"
+      asg_desired_capacity = 1
+    },
   ]
 
   map_users = [

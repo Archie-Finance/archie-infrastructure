@@ -1,0 +1,9 @@
+datadog:
+  apiKey: e92a65b9de1a9d39a6c485a8e51b4ef8
+  appKey: 579b94c3e69bc9a4aed7d8d29272f39c15c7904a
+  criSocketPath: /run/dockershim.sock
+  logs:
+    enabled: true
+    containerCollectAll: true
+  apm:
+    portEnabled: true
