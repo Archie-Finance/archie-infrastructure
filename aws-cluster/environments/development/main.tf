@@ -55,10 +55,17 @@ module "hcp_vault" {
   vpc_cidr_block  = module.vpc.vpc_cidr_block
 }
 
-module "container_registry" {
+module "archie_backend_api_container_registry" {
   source = "../../modules/container_registry"
 
-  name = var.name
+  name = "archie-backend-api"
+}
+
+
+module "archie_asset_price_api_container_registry" {
+  source = "../../modules/container_registry"
+
+  name = "archie-asset-price-api"
 }
 
 module "eks" {
@@ -100,7 +107,6 @@ module "iam" {
 
   name = var.name
 
-  ecr_arn         = module.container_registry.arn
   eks_cluster_arn = module.eks.cluster_arn
 }
 

@@ -25,7 +25,7 @@ module "iam_policy_container_registry_access" {
               "ecr:PutImage",
               "ecr:UploadLayerPart"
           ],
-          "Resource": "${var.ecr_arn}"
+          "Resource": "*"
       },
       {
           "Sid": "VisualEditor1",
