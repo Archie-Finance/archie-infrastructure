@@ -9,6 +9,15 @@ resource "local_file" "iam_user_credentials" {
 EOF
 }
 
+resource "local_file" "iam_aws_ingress_controller" {
+  filename = "${path.root}/outputs/iam_aws_ingress_controller.json"
+  content  = <<EOF
+{
+  "iam_policy_arn": "${module.iam_policy_aws_ingress_controller_access.arn}"
+}
+EOF
+}
+
 output "github_actions_user_arn" {
   value = module.iam_user_github_actions.iam_user_arn
 }

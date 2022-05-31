@@ -13,3 +13,9 @@ Vault instalation
 ```
 https://learn.hashicorp.com/tutorials/cloud/vault-eks?in=vault/cloud-ops
 ```
+
+AWS Load Balancer Controller
+
+```
+https://kubernetes-sigs.github.io/aws-load-balancer-controller/v2.4/deploy/installation/
+```

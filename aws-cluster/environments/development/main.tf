@@ -162,7 +162,7 @@ module "route53" {
       type = "CNAME"
       ttl  = 60
       records = [
-        "a7840d34c44ce40a6a2f405fa0a4718f-494685174.us-east-1.elb.amazonaws.com"
+        "k8s-test-e17eb4024e-594389964.us-east-1.elb.amazonaws.com"
       ]
     },
     {
