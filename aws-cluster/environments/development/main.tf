@@ -61,13 +61,6 @@ module "archie_backend_api_container_registry" {
   name = "archie-backend-api"
 }
 
-
-module "archie_asset_price_api_container_registry" {
-  source = "../../modules/container_registry"
-
-  name = "archie-asset-price-api"
-}
-
 module "eks" {
   source = "../../modules/kubernetes"
 
@@ -208,17 +201,35 @@ module "route53" {
   ]
 }
 
-module "db" {
-  source = "../../modules/database"
+# module "db" {
+#   source = "../../modules/database-mysql"
+
+#   name = var.name
+
+#   db_name  = "development"
+#   username = "archie"
+#   port     = 3306
+
+#   vpc_id                    = module.vpc.vpc_id
+#   vpc_private_subnets       = module.vpc.private_subnets
+#   vpc_database_subnet_group = module.vpc.database_subnet_group
+#   vpc_cidr_block            = module.vpc.vpc_cidr_block
+
+#   instance_class = "db.t4g.small"
+# }
+
+module "postgres-db" {
+  source = "../../modules/database-postgres"
 
   name = var.name
 
   db_name  = "development"
   username = "archie"
-  port     = 3306
 
   vpc_id                    = module.vpc.vpc_id
   vpc_private_subnets       = module.vpc.private_subnets
   vpc_database_subnet_group = module.vpc.database_subnet_group
   vpc_cidr_block            = module.vpc.vpc_cidr_block
+
+  instance_class = "db.t4g.small"
 }
