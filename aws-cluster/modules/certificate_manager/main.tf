@@ -11,6 +11,8 @@ module "acm" {
 
   # wait_for_validation = false
 
+  # validation_method = "EMAIL"
+
   tags = {
     Name = var.domain
   }

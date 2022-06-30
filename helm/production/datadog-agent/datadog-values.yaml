@@ -1,0 +1,10 @@
+datadog:
+  # criSocketPath: /run/dockershim.sock
+  logs:
+    enabled: true
+    containerCollectAll: true
+  apm:
+    portEnabled: true
+clusterAgent:
+  replicas: 2
+  createPodDisruptionBudget: true

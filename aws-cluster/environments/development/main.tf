@@ -21,6 +21,7 @@ terraform {
 
 provider "aws" {
   region = var.region
+  profile = "development"
 }
 
 data "aws_availability_zones" "available" {

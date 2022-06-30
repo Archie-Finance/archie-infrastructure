@@ -5,7 +5,7 @@ module "cdn" {
   comment = var.description
   enabled = true
 
-  aliases = concat([var.domain_name], var.alternate_domains)
+  aliases = var.ignore_cloudfront_aliases ? [] : concat([var.domain_name], var.alternate_domains)
 
   is_ipv6_enabled     = true
   price_class         = "PriceClass_All"

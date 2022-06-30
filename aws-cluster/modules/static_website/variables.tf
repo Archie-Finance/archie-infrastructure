@@ -11,7 +11,7 @@ variable "domain_name" {
 }
 
 variable "alternate_domains" {
-  type = list(string)
+  type    = list(string)
   default = []
 }
 
@@ -20,6 +20,11 @@ variable "acm_certificate_arn" {
 }
 
 variable "lambda_function_association" {
-  type = any
+  type    = any
   default = {}
+}
+
+variable "ignore_cloudfront_aliases" {
+  type    = bool
+  default = false
 }
