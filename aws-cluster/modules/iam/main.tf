@@ -47,7 +47,7 @@ module "iam_policy_eks_access" {
 
   name        = "GithubActionsEksAccess"
   path        = "/"
-  description = "Access to EKS for Github actions"
+  description = "Access to EKS"
 
   policy = <<EOF
 {
@@ -364,6 +364,13 @@ module "iam_user_github_actions" {
   version = "4.14.0"
 
   name = "GithubActionsAccess"
+}
+
+module "key_manager" {
+  source  = "terraform-aws-modules/iam/aws//modules/iam-user"
+  version = "4.14.0"
+
+  name = "KeyManagerAccess"
 }
 
 resource "aws_iam_user_policy_attachment" "attach_container_registry_access_policy" {

@@ -20,7 +20,7 @@ terraform {
 }
 
 provider "aws" {
-  region = var.region
+  region  = var.region
   profile = "development"
 }
 
@@ -145,6 +145,17 @@ module "dashboard_website" {
   depends_on = [module.certificate_manager]
 }
 
+module "design_system_website" {
+  source = "../../modules/static_website"
+
+  name                = "design_system_website"
+  description         = "Design system website"
+  domain_name         = "design-system.${var.domain}"
+  acm_certificate_arn = module.certificate_manager.acm_certificate_arn
+
+  depends_on = [module.certificate_manager]
+}
+
 module "route53" {
   source = "../../modules/route53"
 
@@ -198,6 +209,14 @@ module "route53" {
         name    = module.mfa_website.cloudfront_distribution_domain_name
         zone_id = module.mfa_website.cloudfront_distribution_hosted_zone_id
       }
+    },
+    {
+      name = "design-system"
+      type = "A"
+      alias = {
+        name    = module.design_system_website.cloudfront_distribution_domain_name
+        zone_id = module.design_system_website.cloudfront_distribution_hosted_zone_id
+      }
     }
   ]
 }
@@ -234,3 +253,15 @@ module "postgres-db" {
 
   instance_class = "db.t4g.small"
 }
+
+# module "rabbitmq" {
+#   source = "../../modules/rabbitmq"
+
+#   name = var.name
+
+#   vpc_id                    = module.vpc.vpc_id
+#   vpc_private_subnets       = module.vpc.private_subnets
+#   vpc_cidr_block            = module.vpc.vpc_cidr_block
+
+#   host_instance_type = "mq.t3.micro"
+# }

@@ -118,14 +118,14 @@ module "route53" {
         "k8s-test-566a9892c2-2109929627.us-east-1.elb.amazonaws.com"
       ]
     },
-    # {
-    #   name = "auth"
-    #   type = "CNAME"
-    #   ttl  = 60
-    #   records = [
-    #     "dev-archiefinance-cd-tnrhbiq9lkjsiocf.edge.tenants.us.auth0.com"
-    #   ]
-    # },
+    {
+      name = "auth"
+      type = "CNAME"
+      ttl  = 60
+      records = [
+        "archiefinance-cd-br4lgcihu4newgr7.edge.tenants.us.auth0.com"
+      ]
+    },
     {
       name = ""
       type = "A"
@@ -201,4 +201,16 @@ module "postgres-db" {
 
   instance_class = "db.t4g.medium"
 }
+
+# module "rabbitmq" {
+#   source = "../../modules/rabbitmq"
+
+#   name = var.name
+
+#   vpc_id                    = module.vpc.vpc_id
+#   vpc_private_subnets       = module.vpc.private_subnets
+#   vpc_cidr_block            = module.vpc.vpc_cidr_block
+
+#   host_instance_type = "mq.m5.large"
+# }
 
