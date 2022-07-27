@@ -13,6 +13,7 @@ module "eks" {
   worker_groups = var.worker_groups
 
   map_users = var.map_users
+  map_accounts = var.map_accounts
 }
 
 data "aws_eks_cluster" "cluster" {

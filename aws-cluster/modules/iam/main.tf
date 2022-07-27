@@ -366,13 +366,6 @@ module "iam_user_github_actions" {
   name = "GithubActionsAccess"
 }
 
-module "key_manager" {
-  source  = "terraform-aws-modules/iam/aws//modules/iam-user"
-  version = "4.14.0"
-
-  name = "KeyManagerAccess"
-}
-
 resource "aws_iam_user_policy_attachment" "attach_container_registry_access_policy" {
   user       = module.iam_user_github_actions.iam_user_name
   policy_arn = module.iam_policy_container_registry_access.arn

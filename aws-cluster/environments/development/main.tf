@@ -42,19 +42,19 @@ module "vpc" {
   cluster_name = var.cluster_name
 }
 
-module "hcp_vault" {
-  source = "../../modules/hcp_vault"
+# module "hcp_vault" {
+#   source = "../../modules/hcp_vault"
 
-  cluster_id = var.cluster_name
-  peering_id = var.name
-  route_id   = var.name
+#   cluster_id = var.cluster_name
+#   peering_id = var.name
+#   route_id   = var.name
 
-  enable_public_endpoint = true
+#   enable_public_endpoint = true
 
-  peer_vpc_id     = module.vpc.vpc_id
-  peer_account_id = module.vpc.vpc_owner
-  vpc_cidr_block  = module.vpc.vpc_cidr_block
-}
+#   peer_vpc_id     = module.vpc.vpc_id
+#   peer_account_id = module.vpc.vpc_owner
+#   vpc_cidr_block  = module.vpc.vpc_cidr_block
+# }
 
 module "archie_backend_api_container_registry" {
   source = "../../modules/container_registry"
@@ -94,6 +94,8 @@ module "eks" {
       groups   = ["system:masters"]
     },
   ]
+
+  map_accounts = [ "108827241267", "108827241267" ]
 }
 
 module "iam" {
