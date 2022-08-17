@@ -93,13 +93,24 @@ module "eks" {
       username = module.iam.github_actions_user_name
       groups   = ["system:masters"]
     },
+    {
+      userarn  = module.iam_kubernetes_access.developer_access_user_arn
+      username = module.iam_kubernetes_access.developer_access_user_name
+      groups   = ["system:masters"]
+    },
   ]
-
-  map_accounts = [ "108827241267", "108827241267" ]
 }
 
 module "iam" {
   source = "../../modules/iam"
+
+  name = var.name
+
+  eks_cluster_arn = module.eks.cluster_arn
+}
+
+module "iam_kubernetes_access" {
+  source = "../../modules/iam_kubernetes_access"
 
   name = var.name
 

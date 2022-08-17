@@ -3,4 +3,5 @@
 terraform.tfstate*
 kubeconfig*
 helm/*/infrastructure/templates/unsealed_secrets
+helm/*/secrets/templates/unsealed_secrets
 **/outputs
