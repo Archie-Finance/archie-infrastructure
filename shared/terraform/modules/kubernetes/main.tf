@@ -14,6 +14,8 @@ module "eks" {
 
   map_users = var.map_users
   map_accounts = var.map_accounts
+
+  write_kubeconfig = false
 }
 
 data "aws_eks_cluster" "cluster" {

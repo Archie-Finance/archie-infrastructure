@@ -47,20 +47,6 @@ module "vpc" {
   cluster_name = var.cluster_name
 }
 
-# module "hcp_vault" {
-#   source = "../../modules/hcp_vault"
-
-#   cluster_id = var.cluster_name
-#   peering_id = var.name
-#   route_id   = var.name
-
-#   enable_public_endpoint = true
-
-#   peer_vpc_id     = module.vpc.vpc_id
-#   peer_account_id = module.vpc.vpc_owner
-#   vpc_cidr_block  = module.vpc.vpc_cidr_block
-# }
-
 module "archie_backend_api_container_registry" {
   source = "../../shared/terraform/modules/container_registry"
 
@@ -238,23 +224,6 @@ module "route53" {
     }
   ]
 }
-
-# module "db" {
-#   source = "../../modules/database-mysql"
-
-#   name = var.name
-
-#   db_name  = "development"
-#   username = "archie"
-#   port     = 3306
-
-#   vpc_id                    = module.vpc.vpc_id
-#   vpc_private_subnets       = module.vpc.private_subnets
-#   vpc_database_subnet_group = module.vpc.database_subnet_group
-#   vpc_cidr_block            = module.vpc.vpc_cidr_block
-
-#   instance_class = "db.t4g.small"
-# }
 
 module "postgres-db" {
   source = "../../shared/terraform/modules/database-postgres"
