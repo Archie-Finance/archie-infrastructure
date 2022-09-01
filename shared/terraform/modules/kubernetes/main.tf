@@ -3,7 +3,7 @@ module "eks" {
   version = "17.24.0"
 
   cluster_name                    = var.cluster_name
-  cluster_version                 = "1.21"
+  cluster_version                 = "1.22"
   subnets                         = var.vpc_private_subnets
   cluster_create_timeout          = "1h"
   cluster_endpoint_private_access = true
