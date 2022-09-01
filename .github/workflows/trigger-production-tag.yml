@@ -30,14 +30,6 @@ jobs:
       run: terraform validate
     - name: Plan
       run: terraform plan -no-color -input=false
-  manual_trigger:
-    runs-on: ubuntu-latest
-    needs: check
-    name: Manual trigger
-    steps:
-    - name: Poor mans manual trigger
-      if: ${{ github.run_attempt== 1}}
-      run: exit 1
   deploy:
     runs-on: ubuntu-latest
     needs: manual_trigger
