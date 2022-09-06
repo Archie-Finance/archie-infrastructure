@@ -17,6 +17,12 @@ module "security_group" {
   ]
 }
 
+resource "random_password" "password" {
+  length           = 16
+  special          = true
+  override_special = "!#$%&*()-_=+[]{}<>:?"
+}
+
 resource "aws_mq_broker" "rabbitmq" {
   broker_name = var.name
 
@@ -26,8 +32,8 @@ resource "aws_mq_broker" "rabbitmq" {
   host_instance_type = var.host_instance_type
 
   user {
-    username = "changeme"
-    password = "changeme1234"
+    username = "user"
+    password = random_password.password.result
   }
 
   security_groups = [module.security_group.security_group_id]
