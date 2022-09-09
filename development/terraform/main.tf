@@ -71,7 +71,7 @@ module "eks" {
       asg_desired_capacity = 1
     },
     {
-      name                 = "worker-group-3pp"
+      name                 = "worker-group-3"
       instance_type        = "t2.large"
       additional_userdata  = "development worker"
       asg_desired_capacity = 1
