@@ -238,6 +238,14 @@ module "route53" {
         name    = module.design_system_website.cloudfront_distribution_domain_name
         zone_id = module.design_system_website.cloudfront_distribution_hosted_zone_id
       }
+    },
+    {
+      name = "portal"
+      type = "A"
+      alias = {
+        name    = module.testing_portal.cloudfront_distribution_domain_name
+        zone_id = module.testing_portal.cloudfront_distribution_hosted_zone_id
+      }
     }
   ]
 }
