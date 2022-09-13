@@ -109,6 +109,18 @@ module "marketing_website" {
   depends_on = [module.certificate_manager]
 }
 
+module "dashboard_website" {
+  source = "../../shared/terraform/modules/static_website"
+
+  name                = "dashboard_website"
+  description         = "Dashboard website"
+  domain_name         = "dashboard.${var.domain}"
+  acm_certificate_arn = module.certificate_manager.acm_certificate_arn
+
+  depends_on = [module.certificate_manager]
+}
+
+
 module "route53" {
   source = "../../shared/terraform/modules/route53"
 
@@ -147,14 +159,14 @@ module "route53" {
         zone_id = module.marketing_website.cloudfront_distribution_hosted_zone_id
       }
     },
-    # {
-    #   name = "dashboard"
-    #   type = "A"
-    #   alias = {
-    #     name    = module.dashboard_website.cloudfront_distribution_domain_name
-    #     zone_id = module.dashboard_website.cloudfront_distribution_hosted_zone_id
-    #   }
-    # },
+    {
+      name = "dashboard"
+      type = "A"
+      alias = {
+        name    = module.dashboard_website.cloudfront_distribution_domain_name
+        zone_id = module.dashboard_website.cloudfront_distribution_hosted_zone_id
+      }
+    },
   ]
 }
 
