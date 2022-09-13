@@ -200,7 +200,7 @@ module "route53" {
       ]
     },
     {
-      name = "testing-portal"
+      name = "portal-api"
       type = "CNAME"
       ttl  = 60
       records = [
