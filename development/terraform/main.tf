@@ -24,7 +24,7 @@ variable "secret_key" {}
 variable "region" {}
 
 provider "aws" {
-  region = var.region
+  region     = var.region
   secret_key = var.secret_key
   access_key = var.access_key
 }
@@ -51,6 +51,12 @@ module "archie_backend_api_container_registry" {
   source = "../../shared/terraform/modules/container_registry"
 
   name = "archie-backend-api"
+}
+
+module "archie_testing_portal_container_registry" {
+  source = "../../shared/terraform/modules/container_registry"
+
+  name = "archie-testing-portal"
 }
 
 module "eks" {
@@ -144,6 +150,17 @@ module "dashboard_website" {
   name                = "dashboard_website"
   description         = "Dashboard website"
   domain_name         = "dashboard.${var.domain}"
+  acm_certificate_arn = module.certificate_manager.acm_certificate_arn
+
+  depends_on = [module.certificate_manager]
+}
+
+module "testing_portal" {
+  source = "../../shared/terraform/modules/static_website"
+
+  name                = "testing_portal"
+  description         = "Testing portal website"
+  domain_name         = "portal.${var.domain}"
   acm_certificate_arn = module.certificate_manager.acm_certificate_arn
 
   depends_on = [module.certificate_manager]
