@@ -1,8 +1,3 @@
-variable "region" {
-  default     = "us-east-1"
-  description = "Aws cluster region"
-}
-
 variable "name" {
   default = "archie-production"
 }
