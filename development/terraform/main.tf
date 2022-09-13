@@ -200,6 +200,14 @@ module "route53" {
       ]
     },
     {
+      name = "testing-portal"
+      type = "CNAME"
+      ttl  = 60
+      records = [
+        "k8s-testingportalingr-af3ae9614b-529328079.us-east-1.elb.amazonaws.com"
+      ]
+    },
+    {
       name = ""
       type = "A"
       alias = {
