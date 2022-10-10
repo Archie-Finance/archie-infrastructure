@@ -2,7 +2,7 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "4.4.0"
+      version = "4.23.0"
     }
     kubernetes = {
       source  = "hashicorp/kubernetes"
@@ -274,14 +274,6 @@ module "postgres-db" {
   instance_class = "db.t4g.small"
 }
 
-# module "rabbitmq" {
-#   source = "../../modules/rabbitmq"
-
-#   name = var.name
-
-#   vpc_id                    = module.vpc.vpc_id
-#   vpc_private_subnets       = module.vpc.private_subnets
-#   vpc_cidr_block            = module.vpc.vpc_cidr_block
-
-#   host_instance_type = "mq.t3.micro"
-# }
+module "dynamodb" {
+  source = "../../shared/terraform/modules/dynamodb"
+}
