@@ -192,6 +192,14 @@ module "route53" {
       ]
     },
     {
+      name = "ws"
+      type = "CNAME"
+      ttl  = 60
+      records = [
+        "k8s-test-e17eb4024e-594389964.us-east-1.elb.amazonaws.com"
+      ]
+    },
+    {
       name = "auth"
       type = "CNAME"
       ttl  = 60
@@ -272,8 +280,4 @@ module "postgres-db" {
   vpc_cidr_block            = module.vpc.vpc_cidr_block
 
   instance_class = "db.t4g.small"
-}
-
-module "dynamodb" {
-  source = "../../shared/terraform/modules/dynamodb"
 }
