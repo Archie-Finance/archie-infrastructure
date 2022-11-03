@@ -69,6 +69,12 @@ module "eks" {
       additional_userdata  = "worker"
       asg_desired_capacity = 1
     },
+    {
+      name                 = "worker-group-2"
+      instance_type        = "t2.xlarge"
+      additional_userdata  = "worker"
+      asg_desired_capacity = 1
+    },
   ]
 
   map_users = [
@@ -129,6 +135,14 @@ module "route53" {
   records = [
     {
       name = "api"
+      type = "CNAME"
+      ttl  = 60
+      records = [
+        "k8s-test-566a9892c2-2109929627.us-east-1.elb.amazonaws.com"
+      ]
+    },
+    {
+      name = "ws"
       type = "CNAME"
       ttl  = 60
       records = [

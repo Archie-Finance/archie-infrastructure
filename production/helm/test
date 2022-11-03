@@ -1,0 +1,27 @@
+apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority-data: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUM1ekNDQWMrZ0F3SUJBZ0lCQURBTkJna3Foa2lHOXcwQkFRc0ZBREFWTVJNd0VRWURWUVFERXdwcmRXSmwKY201bGRHVnpNQjRYRFRJeU1EWXlOVEV6TkRjeE4xb1hEVE15TURZeU1qRXpORGN4TjFvd0ZURVRNQkVHQTFVRQpBeE1LYTNWaVpYSnVaWFJsY3pDQ0FTSXdEUVlKS29aSWh2Y05BUUVCQlFBRGdnRVBBRENDQVFvQ2dnRUJBTlorCkdOVWc2dGdxTjFJdjJIS05sb3pnOGNtYlgrei9lSXJsWUd2Z3lWbmU0S0Irb1ZGellHOHFYM0svYUltb0FoTlMKTWdmaFZYSjR0TjV0T1NuM1lTVy9hRkFDWkF1NWdnOUNVR29WaWJFcDI5c0U3QmUwYmwyalhNWXp2TC9tblFJUAptbk41TlI5Q2VLa0ppUGpQcGI0YnV0cWRmVWt0ZlFTdTUyOGpFMHVaWXJJb0k4dmV0aTJLNTdYZDhlMHUyK0ZsClNvZ09RT29MZVNBQjhHbm1NRjFPZjZUT2ZHaCtvVjNLOU10RGhYNEJLQ25jY0thSVRLeHdBNzdRVTRjamRFWXcKUTB4Z0hWaTRQVC9wR1JEd1RYVmxaVEU3WlpQeVp5NjkvOEZCZ00vcjBUZGk2REtqRUk0c3RZaXEzbmFkRmp0VQp6MFM1WTlrN1ZZeE9oR2VVelZjQ0F3RUFBYU5DTUVBd0RnWURWUjBQQVFIL0JBUURBZ0trTUE4R0ExVWRFd0VCCi93UUZNQU1CQWY4d0hRWURWUjBPQkJZRUZIMFU5MkNzQTJnaHJsUkg0aVFROTNwT25XVXBNQTBHQ1NxR1NJYjMKRFFFQkN3VUFBNElCQVFEVFRxMXpSaW5QaFJLbGhRZkFKRG0wUTV3UXo3ZjQyZ0RaaldlUUQ5c2NrQUJSUFV3awpmVEpaWEpjSURLNm1XektQK3Q4SVRKSFUwZ3lMSUxZc3UxNXB0TS9OMFJYeEh0ZDRabFFUazZPZ0J0c3RaT0tzCnBQRzJWbTJFVWxUTmFpUUczaUJPOW9ta3lHRHV4MWJFNE50TlpyeHBLZDg2dFl5TjYyazVsb010UWF1dWlBRG0KdTNRVmQzc0dvTWtSbFA2N3VNN0gyWFlqM1ZLOVpYdytOMDRQYWx0NWRKNFN0WXJrN3RlVWFNdnNNQ1R6eHdSRgp3SkxaUFI5VFBZK0ZLRk90T3p3QjNvSWlGSThSdGZOTms1SFROVU53czg5NkUraEVQOFF3TTlPcGFoM1lPeFJ3CjJqNnFzK3NnTk4vRHFpcGdYU09RWURnS0Y3bU9vVHRwbkZ1NAotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==
+    server: https://865CADF7F2A531FDD9A47B74A1FC69ED.gr7.us-east-1.eks.amazonaws.com
+  name: arn:aws:eks:us-east-1:248649311686:cluster/archie-production-cluster
+contexts:
+- context:
+    cluster: arn:aws:eks:us-east-1:248649311686:cluster/archie-production-cluster
+    user: arn:aws:eks:us-east-1:248649311686:cluster/archie-production-cluster
+  name: arn:aws:eks:us-east-1:248649311686:cluster/archie-production-cluster
+current-context: arn:aws:eks:us-east-1:248649311686:cluster/archie-production-cluster
+kind: Config
+preferences: {}
+users:
+- name: arn:aws:eks:us-east-1:248649311686:cluster/archie-production-cluster
+  user:
+    exec:
+      apiVersion: client.authentication.k8s.io/v1beta1
+      args:
+      - --region
+      - us-east-1
+      - eks
+      - get-token
+      - --cluster-name
+      - archie-production-cluster
+      command: aws

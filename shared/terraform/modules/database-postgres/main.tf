@@ -24,7 +24,7 @@ module "db" {
   identifier = "${var.name}-postgres"
 
   engine               = "postgres"
-  engine_version       = "14.1"
+  engine_version       = "14.3"
   family               = "postgres14"
   major_engine_version = "14"
   instance_class       = var.instance_class
