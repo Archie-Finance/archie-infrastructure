@@ -133,17 +133,6 @@ module "marketing_website" {
   depends_on = [module.certificate_manager]
 }
 
-module "mfa_website" {
-  source = "../../shared/terraform/modules/static_website"
-
-  name                = "mfa_website"
-  description         = "Mfa website"
-  domain_name         = "mfa.${var.domain}"
-  acm_certificate_arn = module.certificate_manager.acm_certificate_arn
-
-  depends_on = [module.certificate_manager]
-}
-
 module "dashboard_website" {
   source = "../../shared/terraform/modules/static_website"
 
@@ -237,14 +226,6 @@ module "route53" {
       alias = {
         name    = module.dashboard_website.cloudfront_distribution_domain_name
         zone_id = module.dashboard_website.cloudfront_distribution_hosted_zone_id
-      }
-    },
-    {
-      name = "mfa"
-      type = "A"
-      alias = {
-        name    = module.mfa_website.cloudfront_distribution_domain_name
-        zone_id = module.mfa_website.cloudfront_distribution_hosted_zone_id
       }
     },
     {
