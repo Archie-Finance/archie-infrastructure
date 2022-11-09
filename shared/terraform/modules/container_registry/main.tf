@@ -4,7 +4,7 @@ resource "aws_ecr_repository" "container_repository" {
   image_tag_mutability = "IMMUTABLE"
 }
 
-resource "aws_ecr_repository_policy" "container_repository_lifecycle_policy" {
+resource "aws_ecr_lifecycle_policy" "container_repository_lifecycle_policy" {
   repository = aws_ecr_repository.container_repository.name
 
   policy = jsonencode({

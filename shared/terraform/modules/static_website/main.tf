@@ -73,7 +73,7 @@ data "aws_iam_policy_document" "static_website_bucket_bucket_policy" {
 
 module "static_website_bucket" {
   source  = "terraform-aws-modules/s3-bucket/aws"
-  version = "3.0.1"
+  version = "3.5.0"
 
   bucket = var.domain_name
   acl    = "public-read"

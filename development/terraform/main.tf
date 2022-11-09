@@ -50,7 +50,7 @@ module "vpc" {
 module "archie_backend_api_container_registry" {
   source = "../../shared/terraform/modules/container_registry"
 
-  name = "archie-backend-api"
+  name = "archie-development"
 }
 
 module "archie_testing_portal_container_registry" {
@@ -261,4 +261,8 @@ module "postgres-db" {
   vpc_cidr_block            = module.vpc.vpc_cidr_block
 
   instance_class = "db.t4g.small"
+}
+
+module "vault_backup" {
+  source = "../../shared/terraform/modules/vault_backup"
 }
