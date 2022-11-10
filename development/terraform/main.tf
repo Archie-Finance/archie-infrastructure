@@ -266,3 +266,9 @@ module "postgres-db" {
 module "vault_backup" {
   source = "../../shared/terraform/modules/vault_backup"
 }
+
+module "test_cluster" {
+  source = "../../shared/terraform/modules/test_cluster"
+
+  acm_certificate_arn = module.certificate_manager.acm_certificate_arn
+}
