@@ -2,7 +2,7 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "4.4.0"
+      version = "4.23.0"
     }
     kubernetes = {
       source  = "hashicorp/kubernetes"
@@ -63,15 +63,21 @@ module "eks" {
   vpc_private_subnets = module.vpc.private_subnets
 
   worker_groups = [
+    # {
+    #   name                 = "worker-group-1"
+    #   instance_type        = "t2.large"
+    #   additional_userdata  = "worker"
+    #   asg_desired_capacity = 1
+    # },
     {
-      name                 = "worker-group-1"
-      instance_type        = "t2.large"
+      name                 = "worker-group-2"
+      instance_type        = "t2.xlarge"
       additional_userdata  = "worker"
       asg_desired_capacity = 1
     },
     {
       name                 = "worker-group-2"
-      instance_type        = "t2.xlarge"
+      instance_type        = "c5.xlarge"
       additional_userdata  = "worker"
       asg_desired_capacity = 1
     },

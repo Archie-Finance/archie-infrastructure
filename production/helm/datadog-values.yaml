@@ -1,10 +1,19 @@
 datadog:
+  apiKey: 1212288725e5ef2131d34b0e64881ff0
+  appKey: 7b692b34418cf69f2699ec8583ab2442b705c82a
   # criSocketPath: /run/dockershim.sock
   logs:
     enabled: true
     containerCollectAll: true
   apm:
     portEnabled: true
+  kubeStateMetricsEnabled: false # https://github.com/DataDog/helm-charts/issues/415#issuecomment-943117608
+  kubeStateMetricsCore:
+    enabled: true
 clusterAgent:
   replicas: 2
   createPodDisruptionBudget: true
+  metricsProvider:
+    enabled: true
+    useDatadogMetrics: true
+    createReaderRbac: true

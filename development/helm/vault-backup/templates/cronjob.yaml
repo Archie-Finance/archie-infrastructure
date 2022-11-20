@@ -1,0 +1,55 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: vault-snapshot-cronjob
+spec:
+  schedule: "* * * * *"
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          annotations:
+a
+        spec:
+          volumes:
+          - name: share
+            emptyDir: {}
+          serviceAccountName: vault-backup
+          containers:
+          - name: snapshot
+            image: vault:1.12.0
+            imagePullPolicy: Never
+            command:
+            - /bin/sh
+            args:
+            - -ec
+            - |
+              . /vault/secrets/config
+              apk update
+              apk add jq
+              apk add curl
+              echo $VAULT_APPROLE_ROLE_ID
+              echo $VAULT_APPROLE_SECRET_ID
+              export VAULT_TOKEN=$(vault write auth/approle/login role_id=$VAULT_APPROLE_ROLE_ID secret_id=$VAULT_APPROLE_SECRET_ID | jq -r .auth.client_token);
+              vault operator raft snapshot save /share/vault-raft.snap; 
+              echo "334";
+            env:
+            - name: VAULT_ADDR
+              value: http://vault.default.svc.cluster.local:8200
+            volumeMounts:
+            - mountPath: /share
+              name: share
+          - name: upload
+            image: amazon/aws-cli:2.8.11
+            imagePullPolicy: Never
+            command:
+            - /bin/sh
+            args:
+            - -ec
+            - |
+              until [ -f /share/vault-raft.snap ]; do sleep 5; done;
+              aws s3 cp /share/vault-raft.snap s3://archie-vault-backup/vault_raft_$(date +"%Y%m%d_%H%M%S").snap;
+            volumeMounts:
+            - mountPath: /share
+              name: share
+          restartPolicy: OnFailure
